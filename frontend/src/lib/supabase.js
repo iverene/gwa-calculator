@@ -92,13 +92,6 @@ export function calcGWA(subjects) {
   return parseFloat((totalWeighted / totalUnits).toFixed(4));
 }
 
-export function getGWALabel(gwa) {
-  if (gwa <= 1.5) return { label: 'Excellent', cls: 'gwa-excellent' };
-  if (gwa <= 2.0) return { label: 'Good', cls: 'gwa-good' };
-  if (gwa <= 2.5) return { label: 'Average', cls: 'gwa-average' };
-  return { label: 'Poor', cls: 'gwa-poor' };
-}
-
 export function exportToCSV(students) {
   const header = ['SR-Code', 'Name', 'GWA', 'Date'];
   const rows = students.map((s) => [

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Search, ChevronUp, ChevronDown, Download, Trash2, ChevronRight } from 'lucide-react';
-import { getGWALabel, exportToCSV } from '../lib/supabase';
+import { exportToCSV } from '../lib/supabase';
 
 export default function RecordsTable({ records, onSelect, onDelete, loading }) {
   const [search, setSearch] = useState('');
@@ -127,51 +127,47 @@ export default function RecordsTable({ records, onSelect, onDelete, loading }) {
                   </td>
                 </tr>
               ) : (
-                filtered.map((r) => {
-                  const { label, cls } = getGWALabel(r.gwa);
-                  return (
-                    <tr
-                      key={r.id}
-                      onClick={() => onSelect(r)}
-                      className="table-row-hover animate-in"
-                    >
-                      <td className="px-5 py-4">
-                        <span className="font-mono text-xs bg-ink-100 text-ink-600 px-2.5 py-1 rounded-full">
-                          {r.sr_code}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 font-body font-medium text-ink-800">{r.name}</td>
-                      <td className="px-5 py-4">
-                        <span className={`gwa-badge text-sm ${cls}`}>
-                          {parseFloat(r.gwa).toFixed(4)}
-                          <span className="ml-2 text-xs opacity-60">{label}</span>
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-ink-400 font-body text-xs whitespace-nowrap">
-                        {new Date(r.created_at).toLocaleString('en-PH', {
-                          month: 'short', day: 'numeric', year: 'numeric',
-                          hour: '2-digit', minute: '2-digit',
-                        })}
-                      </td>
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-1 justify-end" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => onSelect(r)}
-                            className="btn-ghost p-2 text-ink-400"
-                          >
-                            <ChevronRight size={13} />
-                          </button>
-                          <button
-                            onClick={(e) => handleDelete(e, r.id)}
-                            className={`p-2 rounded-lg text-xs font-display transition-all duration-200 ${deleteConfirm === r.id ? 'bg-red-500 text-white px-3' : 'text-red-300 hover:text-red-500 hover:bg-red-50'}`}
-                          >
-                            {deleteConfirm === r.id ? 'Confirm?' : <Trash2 size={13} />}
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
+                filtered.map((r) => (
+                  <tr
+                    key={r.id}
+                    onClick={() => onSelect(r)}
+                    className="table-row-hover animate-in"
+                  >
+                    <td className="px-5 py-4">
+                      <span className="font-mono text-xs bg-ink-100 text-ink-600 px-2.5 py-1 rounded-full">
+                        {r.sr_code}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 font-body font-medium text-ink-800">{r.name}</td>
+                    <td className="px-5 py-4">
+                      <span className="font-mono font-semibold text-ink-900">
+                        {parseFloat(r.gwa).toFixed(4)}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-ink-400 font-body text-xs whitespace-nowrap">
+                      {new Date(r.created_at).toLocaleString('en-PH', {
+                        month: 'short', day: 'numeric', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit',
+                      })}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-1 justify-end" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => onSelect(r)}
+                          className="btn-ghost p-2 text-ink-400"
+                        >
+                          <ChevronRight size={13} />
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(e, r.id)}
+                          className={`p-2 rounded-lg text-xs font-display transition-all duration-200 ${deleteConfirm === r.id ? 'bg-red-500 text-white px-3' : 'text-red-300 hover:text-red-500 hover:bg-red-50'}`}
+                        >
+                          {deleteConfirm === r.id ? 'Confirm?' : <Trash2 size={13} />}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>

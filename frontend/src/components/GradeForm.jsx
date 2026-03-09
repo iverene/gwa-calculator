@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Plus, Trash2, ChevronRight, Loader2 } from 'lucide-react';
-import { calcGWA, getGWALabel } from '../lib/supabase';
+import { calcGWA } from '../lib/supabase';
 
 const emptyRow = () => ({ id: crypto.randomUUID(), subject_name: '', grade: '', units: '' });
 
@@ -14,6 +14,13 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const reset = () => {
+    setSrCode('');
+    setName('');
+    setSubjects([emptyRow(), emptyRow()]);
+    setError('');
+  };
 
   const addRow = () => setSubjects((prev) => [...prev, emptyRow()]);
 
@@ -53,16 +60,15 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
       setLoading(true);
       try {
         await onSubmit({ sr_code: srCode.trim(), name: name.trim(), subjects: validSubjects });
+        if (!isEdit) reset();
       } catch (err) {
         setError(err.message || 'Something went wrong.');
       } finally {
         setLoading(false);
       }
     },
-    [srCode, name, subjects, hasValidSubjects, onSubmit]
+    [srCode, name, subjects, hasValidSubjects, onSubmit, isEdit]
   );
-
-  const { label, cls } = hasValidSubjects ? getGWALabel(liveGWA) : { label: '—', cls: '' };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -181,8 +187,7 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
             <p className="text-xs text-ink-400 font-body">Based on current inputs</p>
           </div>
           <div className="text-right">
-            <span className={`gwa-badge text-xl ${cls}`}>{liveGWA.toFixed(4)}</span>
-            <p className="text-xs text-ink-400 mt-1 font-display">{label}</p>
+            <span className="font-mono font-semibold text-2xl text-ink-900">{liveGWA.toFixed(4)}</span>
           </div>
         </div>
       )}

@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { X, Edit3, CheckCircle } from 'lucide-react';
 import GradeForm from './GradeForm';
-import { getGWALabel } from '../lib/supabase';
 
 export default function StudentModal({ student, onClose, onUpdate }) {
   const [editing, setEditing] = useState(false);
   const [successGWA, setSuccessGWA] = useState(null);
-
-  const { label, cls } = getGWALabel(student.gwa);
 
   const handleUpdate = async (data) => {
     const newGWA = await onUpdate(student.id, data);
@@ -33,9 +30,11 @@ export default function StudentModal({ student, onClose, onUpdate }) {
             </span>
             <h2 className="font-display font-bold text-xl text-ink-900 mt-2">{student.name}</h2>
             {!editing && (
-              <div className="flex items-center gap-3 mt-2">
-                <span className={`gwa-badge ${cls}`}>{parseFloat(student.gwa).toFixed(4)}</span>
-                <span className="text-xs text-ink-400 font-display">{label}</span>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-xs font-display font-semibold text-ink-400 uppercase tracking-widest">GWA</span>
+                <span className="font-mono font-bold text-lg text-ink-900">
+                  {parseFloat(student.gwa).toFixed(4)}
+                </span>
               </div>
             )}
           </div>
@@ -62,7 +61,9 @@ export default function StudentModal({ student, onClose, onUpdate }) {
               <CheckCircle size={16} className="text-emerald-600 shrink-0" />
               <div>
                 <p className="text-sm font-display font-semibold text-emerald-800">Record updated!</p>
-                <p className="text-xs text-emerald-600 mt-0.5">New GWA: <span className="font-mono font-semibold">{parseFloat(successGWA).toFixed(4)}</span></p>
+                <p className="text-xs text-emerald-600 mt-0.5">
+                  New GWA: <span className="font-mono font-semibold">{parseFloat(successGWA).toFixed(4)}</span>
+                </p>
               </div>
             </div>
           )}
@@ -84,7 +85,7 @@ export default function StudentModal({ student, onClose, onUpdate }) {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-ink-50 border-b border-ink-100">
-                      {['Subject', 'Grade', 'Units', 'Weighted'].map((h) => (
+                      {['Subject', 'Grade', 'Units'].map((h) => (
                         <th key={h} className="px-4 py-3 text-left text-xs font-display font-semibold text-ink-400 uppercase tracking-wider">
                           {h}
                         </th>
@@ -97,24 +98,9 @@ export default function StudentModal({ student, onClose, onUpdate }) {
                         <td className="px-4 py-3 font-body text-ink-700">{s.subject_name || `Subject ${i + 1}`}</td>
                         <td className="px-4 py-3 font-mono text-ink-600">{parseFloat(s.grade).toFixed(2)}</td>
                         <td className="px-4 py-3 font-mono text-ink-600">{s.units}</td>
-                        <td className="px-4 py-3 font-mono text-ink-500 text-xs">
-                          {(parseFloat(s.grade) * parseFloat(s.units)).toFixed(2)}
-                        </td>
                       </tr>
                     ))}
                   </tbody>
-                  <tfoot>
-                    <tr className="bg-ink-50 border-t border-ink-200">
-                      <td className="px-4 py-3 text-xs font-display font-semibold text-ink-500 uppercase tracking-wider">Total</td>
-                      <td className="px-4 py-3" />
-                      <td className="px-4 py-3 font-mono text-xs font-semibold text-ink-700">
-                        {(student.subjects || []).reduce((s, x) => s + parseFloat(x.units), 0)}
-                      </td>
-                      <td className="px-4 py-3 font-mono text-xs font-semibold text-ink-700">
-                        {(student.subjects || []).reduce((s, x) => s + parseFloat(x.grade) * parseFloat(x.units), 0).toFixed(2)}
-                      </td>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
 
