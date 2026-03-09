@@ -19,7 +19,7 @@ export default function StudentModal({ student, onClose, onUpdate }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-ink-950/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink-950/40"
         onClick={onClose}
       />
 
@@ -34,7 +34,7 @@ export default function StudentModal({ student, onClose, onUpdate }) {
             <h2 className="font-display font-bold text-xl text-ink-900 mt-2">{student.name}</h2>
             {!editing && (
               <div className="flex items-center gap-3 mt-2">
-                <span className={`gwa-badge ${cls}`}>{parseFloat(student.gwa).toFixed(2)}</span>
+                <span className={`gwa-badge ${cls}`}>{parseFloat(student.gwa).toFixed(4)}</span>
                 <span className="text-xs text-ink-400 font-display">{label}</span>
               </div>
             )}
