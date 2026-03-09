@@ -89,7 +89,7 @@ export function calcGWA(subjects) {
   if (!valid.length) return 0;
   const totalWeighted = valid.reduce((sum, s) => sum + parseFloat(s.grade) * parseFloat(s.units), 0);
   const totalUnits = valid.reduce((sum, s) => sum + parseFloat(s.units), 0);
-  return Math.round((totalWeighted / totalUnits) * 100) / 100;
+  return parseFloat((totalWeighted / totalUnits).toFixed(4));
 }
 
 export function getGWALabel(gwa) {

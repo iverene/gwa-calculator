@@ -62,7 +62,7 @@ export default function StudentModal({ student, onClose, onUpdate }) {
               <CheckCircle size={16} className="text-emerald-600 shrink-0" />
               <div>
                 <p className="text-sm font-display font-semibold text-emerald-800">Record updated!</p>
-                <p className="text-xs text-emerald-600 mt-0.5">New GWA: <span className="font-mono font-semibold">{parseFloat(successGWA).toFixed(2)}</span></p>
+                <p className="text-xs text-emerald-600 mt-0.5">New GWA: <span className="font-mono font-semibold">{parseFloat(successGWA).toFixed(4)}</span></p>
               </div>
             </div>
           )}

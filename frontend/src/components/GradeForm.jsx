@@ -181,7 +181,7 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
             <p className="text-xs text-ink-400 font-body">Based on current inputs</p>
           </div>
           <div className="text-right">
-            <span className={`gwa-badge text-xl ${cls}`}>{liveGWA.toFixed(2)}</span>
+            <span className={`gwa-badge text-xl ${cls}`}>{liveGWA.toFixed(4)}</span>
             <p className="text-xs text-ink-400 mt-1 font-display">{label}</p>
           </div>
         </div>

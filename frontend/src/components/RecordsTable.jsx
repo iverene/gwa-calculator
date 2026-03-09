@@ -143,7 +143,7 @@ export default function RecordsTable({ records, onSelect, onDelete, loading }) {
                       <td className="px-5 py-4 font-body font-medium text-ink-800">{r.name}</td>
                       <td className="px-5 py-4">
                         <span className={`gwa-badge text-sm ${cls}`}>
-                          {parseFloat(r.gwa).toFixed(2)}
+                          {parseFloat(r.gwa).toFixed(4)}
                           <span className="ml-2 text-xs opacity-60">{label}</span>
                         </span>
                       </td>
