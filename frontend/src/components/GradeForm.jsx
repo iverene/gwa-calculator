@@ -110,7 +110,7 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
         <div className="border border-ink-200 rounded-xl overflow-hidden">
           {/* Header */}
           <div className="grid grid-cols-[1fr_100px_80px_44px] gap-0 bg-ink-50 border-b border-ink-200">
-            {['Subject', 'Grade', 'Units', ''].map((h, i) => (
+            {['Subject', 'Units', 'Grade', ''].map((h, i) => (
               <div key={i} className={`px-4 py-2.5 text-xs font-display font-semibold text-ink-400 uppercase tracking-wider ${i === 3 ? 'text-center' : ''}`}>
                 {h}
               </div>
