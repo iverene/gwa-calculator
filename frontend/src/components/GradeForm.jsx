@@ -129,6 +129,18 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
                     onChange={(e) => updateRow(row.id, 'subject_name', e.target.value)}
                   />
                 </div>
+                
+                <div className="px-3 py-2.5 border-l border-ink-100">
+                  <input
+                    type="number"
+                    step="1"
+                    min="1"
+                    className="w-full bg-transparent text-sm text-ink-800 placeholder-ink-300 focus:outline-none font-mono text-center"
+                    placeholder="3"
+                    value={row.units}
+                    onChange={(e) => updateRow(row.id, 'units', e.target.value)}
+                  />
+                </div>
                 <div className="px-3 py-2.5 border-l border-ink-100">
                   <input
                     type="number"
@@ -139,17 +151,6 @@ export default function GradeForm({ initialData, onSubmit, onCancel, isEdit = fa
                     placeholder="1.0"
                     value={row.grade}
                     onChange={(e) => updateRow(row.id, 'grade', e.target.value)}
-                  />
-                </div>
-                <div className="px-3 py-2.5 border-l border-ink-100">
-                  <input
-                    type="number"
-                    step="1"
-                    min="1"
-                    className="w-full bg-transparent text-sm text-ink-800 placeholder-ink-300 focus:outline-none font-mono text-center"
-                    placeholder="3"
-                    value={row.units}
-                    onChange={(e) => updateRow(row.id, 'units', e.target.value)}
                   />
                 </div>
                 <div className="flex items-center justify-center border-l border-ink-100">
